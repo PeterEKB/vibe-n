@@ -15,7 +15,6 @@ export class FullNavComponent {
     ngOnInit() { }
     
     public catSelect(){
-        console.log(document.querySelector(`[identity="${this.data.messages.activeId}"]`))
         if(document.querySelector(`#messages`)){
             document.querySelector(`#messages`)!.id = ''
         }

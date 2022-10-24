@@ -127,6 +127,7 @@ export class MainComponent implements OnInit, OnDestroy {
             if (v.id === 'sOut') {
                 localStorage.clear()
                 this.nav.fNav.config.open = false
+                this.nav.fNav.popup.open = false
                 this.router.navigate(['/signin'])
                 return false
             }
@@ -135,12 +136,11 @@ export class MainComponent implements OnInit, OnDestroy {
                 this.nav.fNav.popup.open = false
                 return false
             }
-            if (v.id === 'tray' || v.classList.contains('messages')!== undefined) {
+            if (v.id === 'tray' || v.classList.contains('messages') !== undefined) {
                 let query = ''
                 if (v.classList.contains('messages')) {
                     query = v.getAttribute('identity')
                 }else{
-                    console.log(v)
                     query = v.querySelector('[identity]').getAttribute('identity')
                 }
                 const identity = query.split(','),

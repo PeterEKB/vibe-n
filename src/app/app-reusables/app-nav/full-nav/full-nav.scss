@@ -98,6 +98,10 @@
                     align-items: center;
                     cursor: pointer;
                     transition: background-color .1s;
+
+                    * {
+                        pointer-events: none;
+                    }
                 }
 
                 #sOut:hover {
