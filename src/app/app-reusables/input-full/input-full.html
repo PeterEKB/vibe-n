@@ -1,0 +1,2 @@
+<input #inp [id]="attr.for" (blur)="onBlur()" (input)="emitEvent($event)" value="{{attr.value || ''}}">
+<label [className]="active" [for]='attr.for'>{{attr.placeholder || attr.label}}</label>

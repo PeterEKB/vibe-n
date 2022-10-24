@@ -1,0 +1,13 @@
+<ng-template #cat>{{data.category}}</ng-template>
+<ng-template #img><img id="logo" src="{{data.logo}}"></ng-template>
+<div id="nav">
+    <div id="burger">
+        <div id="layer1" class="layers"></div>
+        <div id="layer2" class="layers"></div>
+        <div id="layer3" class="layers"></div>
+        <div id="notice" *ngIf='data.notice'></div>
+    </div>
+    <div id="category">
+        <div  *ngIf="data.category !== '';then cat else img"></div>
+    </div>
+</div>

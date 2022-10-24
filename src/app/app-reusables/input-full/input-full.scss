@@ -1,0 +1,38 @@
+:host {
+    display: block;
+    position: relative;
+    height: 3.5rem;
+    width: 100%;
+    max-width: 20rem;
+
+    input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: hsla(0, 0%, 85%, 1);
+        padding: .8rem 1.5rem 0;
+        border: none;
+        border-radius: 10rem;
+        outline: none;
+        box-shadow: .2rem .2rem .4rem hsla(0, 0%, 0%, .25)inset, 0 0 0 .08rem hsla(0, 0%, 100%, 1);
+    }
+    input:focus + label, .active {
+        left: 30px;
+        top: 2px;
+        font-size: 16px;
+        transform: translateX(0);
+    }
+    label {
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color:hsla(0, 0%, 30%, 1);
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+        transition-duration: .2s;
+        cursor: text;
+    }
+}

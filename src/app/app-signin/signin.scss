@@ -1,0 +1,58 @@
+@import url('../app-reusables/partials/_content.scss');
+
+#content-area {
+
+    #form {
+        display: grid;
+        grid-template: 1rem 15% 1% 1fr 1rem/1rem 1fr 1rem;
+        gap: 1rem;
+    }
+
+    #header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        grid-area: 2/2/3/3;
+        border-bottom: 1px solid white;
+
+        #signinTxt {
+            height: 52px;
+            color: hsla(0, 0%, 100%, 0.4);
+            font-size: 48px;
+            line-height: 38px;
+            font-weight: 700;
+            text-shadow: 0 1px 0px hsla(0, 0%, 0%, 1);
+        }
+    }
+
+    #body {
+        grid-area: 4/2/5/3;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        align-items: center;
+
+        .wrong::ng-deep {
+            input {
+                background: hsla(0, 100%, 90%, 1);
+            }
+
+            label {
+                color: red;
+            }
+        }
+
+        #message {
+            display: none;
+            color: red;
+            background: black;
+            padding: 10px;
+            border-radius: 0.3rem;
+        }
+
+        #message.active {
+            display: block;
+        }
+    }
+}

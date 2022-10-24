@@ -1,0 +1,16 @@
+<div id="content-area">
+    <img src="assets/logo.svg" alt="" id="logo">
+    <div id="form">
+        <div id="header">
+            <div id="signinTxt">Sign In</div>
+        </div>
+        <div id="body">
+            <inp [ngClass]="inStyles" [attr]='attr.email' (inputEvent)="inputHandle($event,'email')"></inp>
+            <inp [ngClass]="inStyles" [attr]='attr.pass' (inputEvent)="inputHandle($event,'pass')"></inp>
+            <btn-rs (click)="signIn()" (mouseover)="mouseOver('sI_btn')" (mouseout)="mouseOut('sI_btn')"
+                [options]="btns.sI_btn"></btn-rs>
+            <btn-rs (click)="fillInputs()" (mouseover)="mouseOver('d_btn')" (mouseout)="mouseOut('d_btn')" [options]="btns.d_btn"></btn-rs>
+            <div id="message" [ngClass]="message.config">{{message.text}}</div>
+        </div>
+    </div>
+</div>

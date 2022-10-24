@@ -1,0 +1,44 @@
+@mixin center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+:host {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img#bgImg {
+        @include center;
+        width: 100%;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        animation: opacity .2s;
+    }
+
+    div#blur {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(110deg,
+                hsla(0, 0%, 31%, 0.7) 12.07%,
+                hsla(0, 0%, 0%, 0.7) 56.21%,
+                hsla(0, 0%, 0%, 0.8) 76.28%);
+        // backdrop-filter: blur(10px);
+    }
+}
+
+@keyframes opacity {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

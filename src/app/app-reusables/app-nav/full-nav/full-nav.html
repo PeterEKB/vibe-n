@@ -1,0 +1,55 @@
+<div id="content" [ngClass]="data.config" (click)="emitEvent($event)">
+    <div id="background"></div>
+    <div id="nav">
+        <div id="header">
+            <div id="profile">
+                <div id="pflImg">
+                    <img [src]="data.userInfo.image" alt="">
+                </div>
+                <div id="name">{{data.userInfo.fName}}</div>
+                <div id="sOut">
+                    <p>Sign out</p>
+                </div>
+            </div>
+        </div>
+        <div id="tray">
+            <div id="bell">
+                <span class="material-symbols-outlined">
+                    notifications_active
+                </span>
+            </div>
+            <div id="tBody">
+                <div *ngIf="data.messages.urgent; else elseIf">
+
+                    <div attr.identity="urgent,{{data.messages.urgent[0].msgId}}">{{data.messages.urgent[0].category}}</div>
+                </div>
+                <ng-template #elseIf>
+
+                    <div *ngIf="data.messages.general; else default" attr.identity="general,{{data.messages.general[0].msgId}}">{{data.messages.general[0].category}}</div>
+                </ng-template>
+                <ng-template #default>No new messages</ng-template>
+            </div>
+            <div id="arrow">
+                <span class="material-symbols-outlined">
+                    chevron_right
+                </span>
+            </div>
+        </div>
+        <div id="body"></div>
+    </div>
+    <div [ngClass]="data.popup" id="popup">
+        <div id="panel">
+            <div *ngFor="let message of data.messages.urgent" attr.identity="urgent,{{message.msgId}}" class="messages">
+                <p>{{message.category}}</p>
+            </div>
+            <div *ngFor="let message of data.messages.general" attr.identity="general,{{message.msgId}}" class="messages">
+                <p>{{message.category}}</p>
+            </div>
+        </div>
+        <div id="pBody">
+            <h1>{{data.messages.active?.category}}</h1>
+            <h4>{{data.messages.active?.title}}</h4>
+            <p>{{data.messages.active?.message}}</p>
+        </div>
+    </div>
+</div>

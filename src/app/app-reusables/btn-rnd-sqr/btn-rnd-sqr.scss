@@ -1,0 +1,25 @@
+#btn{
+    display: flex;
+    width: 250px;
+    height: 50px;
+    background: hsla(0,0%,80%,1);
+    border: 1px solid hsla(176,0%,50%,1);
+    border-radius: .5rem;
+    box-shadow: 2px 2px 2px hsla(0,0%,0%,.5);
+    text-align: center;
+    justify-content: center;
+    transition: border .2s, background .2s;
+    
+    p {
+        align-self: center;
+        pointer-events: none;
+    }
+}
+#btn.active{
+    background: hsla(0,0%,100%,1);
+    border: 1px solid hsla(176,100%,50%,1);
+    cursor: pointer;
+}
+#btn.active.hover{
+    background: hsla(176,100%,95%,1);
+}

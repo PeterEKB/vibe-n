@@ -1,0 +1,6 @@
+<background [src]="bgImg">Background of application</background>
+<midground>Routed pages load here</midground>
+<div *ngIf='nav.active'>
+    <h-nav [data]="nav.hNav" (click)="fNav"></h-nav>
+    <f-nav #fNavVC [data]="nav.fNav" (clickEvent)="fNavEventHandler($event)"></f-nav>
+</div>
