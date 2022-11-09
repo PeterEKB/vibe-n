@@ -11,6 +11,10 @@ import { HeaderNavComponent } from './app-reusables/app-nav/header-nav/header-na
 import { FullNavComponent } from './app-reusables/app-nav/full-nav/full-nav';
 import { Users } from './app-services/userInfo';
 import { AuthCheck } from './app-services/auth.validator';
+import { MovieElementComponent } from './app-reusables/movElement/movElement';
+import { HttpClientModule } from '@angular/common/http';
+import { MovieRowComponent } from './app-reusables/movRow/movRow';
+import { YouTubeService } from './app-services/youtube-api';
 
 @NgModule({
   declarations: [
@@ -22,15 +26,11 @@ import { AuthCheck } from './app-services/auth.validator';
     ButtonRSComponent,
     HeaderNavComponent,
     FullNavComponent,
+    MovieElementComponent,
+    MovieRowComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-  ],
-  providers: [
-    Users, 
-    AuthCheck
-  ],
-  bootstrap: [MainComponent]
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [Users, AuthCheck],
+  bootstrap: [MainComponent],
 })
-export class AppModule { }
+export class AppModule {}

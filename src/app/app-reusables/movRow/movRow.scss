@@ -1,0 +1,68 @@
+#content {
+  --mov-num: 7;
+  --mov-width: calc(100% / var(--mov-num) - 30px + 30px / var(--mov-num));
+  --pos: 0;
+
+  padding: 15px;
+
+  #head {
+    color: white;
+    font-size: 2rem;
+    text-shadow: 1px 1px 2px black;
+  }
+
+  #body {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 100%;
+    gap: 30px;
+    overflow: visible;
+
+    scroll-snap-type: x mandatory;
+    scroll-snap-align: center;
+  }
+
+  mov-ele {
+    flex: 0 0 var(--mov-width);
+    transform: translate(calc(var(--pos) * 100% + var(--pos) * 30px), 0);
+    align-self: center;
+    transition: transform .3s ease;
+  }
+
+  #pre,
+  #nxt {
+    opacity: 0;
+    display: flex;
+    position: absolute;
+    width: calc(var(--mov-width) / 3);
+    height: 100%;
+    background: linear-gradient(transparent, hsla(0, 0%, 0%, 0.7), transparent);
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition-duration: 0.3s;
+  }
+
+  #pre.available,
+  #nxt.available {
+    opacity: 1;
+  }
+  #pre.hide,
+  #nxt.hide {
+    opacity: 0;
+  }
+
+  #pre {
+    left: 0;
+  }
+
+  #nxt {
+    right: 0;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

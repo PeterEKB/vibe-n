@@ -31,6 +31,10 @@
                 hsla(0, 0%, 0%, 0.8) 76.28%);
         // backdrop-filter: blur(10px);
     }
+    #solid {
+        position: absolute;
+        inset: 0;
+    }
 }
 
 @keyframes opacity {

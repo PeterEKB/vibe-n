@@ -1,0 +1,48 @@
+<div #main id="content">
+  <div id="banner">
+    <div id="passive">
+      <div id="video">
+        <iframe
+          id="player"
+          [src]="safeClipSrc"
+          title="YouTube video player"
+          frameborder="0"
+          allow="autoplay"
+        ></iframe>
+        <!-- <div id="player"></div> -->
+        <div id="vidImg" [ngClass]="classes.vidImg">
+          <img [src]="bannerImg" />
+        </div>
+        <div id="cover"></div>
+      </div>
+    </div>
+    <div id="uI">
+      <div id="action" [ngSwitch]="playerState.status" (click)="actionHandler()">
+        <span *ngSwitchCase="'playing'" class="material-symbols-outlined">
+          <ng-container *ngIf="volume;else alt">volume_up</ng-container>
+          <ng-template #alt>music_off</ng-template>
+        </span>
+        <span
+          *ngSwitchCase="'paused'"
+          id="replay"
+          class="material-symbols-outlined"
+        >
+          replay
+        </span>
+        <span
+          *ngSwitchCase="'ended'"
+          id="replay"
+          class="material-symbols-outlined"
+        >
+          replay
+        </span>
+        <span *ngSwitchDefault class="material-symbols-outlined">
+          music_off
+        </span>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngFor="let info of data; let i = index">
+    <mov-row [parent_scroll]="scrolling" [data]="info"></mov-row>
+  </ng-container>
+</div>

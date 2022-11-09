@@ -9,7 +9,6 @@ import { Component, EventEmitter, Input, SimpleChange } from "@angular/core";
 })
 export class FullNavComponent {
     @Input() data:any
-    clickEvent = new EventEmitter
 
 
     ngOnInit() { }
@@ -20,8 +19,5 @@ export class FullNavComponent {
         }
         const active:any = document.querySelector(`#popup [identity="${this.data.messages.activeId}"]`)
         active.id = 'messages'
-    }
-    emitEvent(e: any) {
-        this.clickEvent.emit(e)
     }
 }

@@ -1,0 +1,20 @@
+<div id="content" #row>
+    <div id="head">
+        <div>{{data.genre}}</div>
+    </div>
+    <div #mov id="body">
+        <ng-container *ngFor="let mov of content; index as i">
+            <mov-ele [attr.index]="i" [data]="mov"></mov-ele>
+        </ng-container>
+        <div id="pre" (click)="scroll('right')" [ngClass]="class.left">
+            <span class="material-symbols-outlined">
+                chevron_left
+            </span>
+        </div>
+        <div id="nxt" (click)="scroll('left')" [ngClass]="class.right">
+            <span class="material-symbols-outlined">
+                chevron_right
+            </span>
+        </div>
+    </div>
+</div>

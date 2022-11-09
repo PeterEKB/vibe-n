@@ -1,0 +1,102 @@
+#content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100%);
+  overflow: hidden auto;
+  scroll-behavior: smooth;
+
+  #banner {
+    position: relative;
+    width: 100%;
+    height: 70%;
+    flex: 0 0;
+
+    #passive {
+      inset: 0;
+      z-index: -1;
+
+      #video {
+        position: relative;
+        aspect-ratio: 2.4;
+        width: 100%;
+        overflow: hidden;
+
+        iframe {
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          aspect-ratio: 1.78;
+          min-width: 100%;
+        }
+        #vidImg {
+          position: absolute;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          transition-duration: 0s;
+
+          img {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 100%;
+            min-width: 100%;
+            min-height: 100%;
+          }
+        }
+      }
+      #vidImg.hide {
+        opacity: 0 !important;
+        transition: opacity 0.3s 0.3s !important;
+      }
+      #cover {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          360deg,
+          hsla(0deg, 0%, 0%, 1),
+          hsla(0deg, 0%, 0%, 0.5) 3%,
+          hsla(0deg, 0%, 0%, 0.1) 8%,
+          hsla(0deg, 0%, 0%, 0) 10%
+        );
+      }
+    }
+    #uI {
+      position: absolute;
+      inset: 0;
+
+      #action {
+        display: flex;
+        position: absolute;
+        right: 150px;
+        bottom: 50px;
+        aspect-ratio: 1;
+        height: 50px;
+        border: 1px solid white;
+        border-radius: 10rem;
+        // background: hsla(0, 0%, 100%, 0.2);
+        // box-shadow: 2px 0px 2px black, 1px 1px 2px white inset,
+        // -1px -1px 2px hsla(0, 0%, 0%, 1) inset;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        * {
+          pointer-events: none;
+        }
+        #replay {
+          transform: rotate(-90deg);
+        }
+      }
+    }
+  }
+  mov-row{
+    z-index: 1;
+  }
+}

@@ -12,8 +12,24 @@ html, body {
     overflow: hidden;
     cursor: default;
     user-select: none;
+    overscroll-behavior: none;
 
     img{
     -webkit-user-drag: none;
     }
 }
+
+::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: linear-gradient(to bottom, hsla(0, 0%, 70%,.7), transparent);
+    border-left: 1px solid hsla(0, 0%, 100%, .3);
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(0, 0%, 90%);
+    border-radius: 10rem;
+    border-left: 1px solid hsla(0, 0%, 0%, 1);
+  }

@@ -1,0 +1,12 @@
+<div id="content">
+    <div id="default" *ngIf="!element.actual.display">
+        <div id="img">
+            <p>INCOMING</p>
+        </div>
+    </div>
+    <div id="actual" #actual [ngClass]="element.actual">
+        <div id="poster">
+            <img [src]="data.img" (load)="loaded">
+        </div>
+    </div>
+</div>

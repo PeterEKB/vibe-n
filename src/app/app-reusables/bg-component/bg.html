@@ -1,2 +1,3 @@
-<img id="bgImg" [src]="src" (load)="imgLoaded()">
+<img *ngIf="data.activate" id="bgImg" [src]="data.src" (load)="imgLoaded()" />
 <div id="blur"></div>
+<div *ngIf="!data.activate" [style]="data.styles" id="solid">{{data.color}}</div>
