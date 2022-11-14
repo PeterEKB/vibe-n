@@ -2,12 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
-  from,
-  fromEvent,
   Observable,
-  of,
   Subject,
-  switchMap,
   take,
   takeUntil,
   tap,
@@ -18,18 +14,6 @@ export class YouTubeService {
   private base: string =
     'https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&key=';
   private apiKey: string = 'AIzaSyAHQzOaAPg_k2K7Lea8RJR3hDSLi5Lbd8c';
-
-  test!: Observable<any>;
-
-  constructor(private http: HttpClient) {}
-
-  public getTrailer(title: string) {
-    const t = title.replace(' ', '-') + 'official-trailer',
-      query = this.base + this.apiKey + '&q=' + t,
-      result = this.http.get(query).pipe(take(1));
-
-    return result;
-  }
 
   private notifier$ = new Subject();
   playerReady = new Observable((observer) => {
@@ -53,6 +37,57 @@ export class YouTubeService {
       )
       .subscribe();
   });
+  get video() {
+    return {
+      time: (window as any)['player'].getCurrentTime(),
+      duration: (window as any)['player'].getDuration(),
+      ready: (window as any)['playerReady'],
+    };
+  }
+  set video(val: any) {
+    switch (val) {
+      case 'play':
+        (window as any)['player'].playVideo();
+        break;
+      case 'pause':
+        (window as any)['player'].pauseVideo();
+        break;
+      case 'stop':
+        (window as any)['player'].stopVideo();
+        break;
+      default:
+        if (typeof val === 'number') (window as any)['player'].seekTo(val);
+        break;
+    }
+  }
+  get volume() {
+    return {
+      isMuted: (window as any)['player'].isMuted(),
+      volume: (window as any)['player'].getVolume(),
+    };
+  }
+  set volume(val: any) {
+    switch (val) {
+      case 'mute':
+        (window as any)['player'].mute();
+        break;
+      case 'unMute':
+        (window as any)['player'].unMute();
+        break;
+      default:
+        if (typeof val === 'number') (window as any)['player'].setVolume(val);
+        break;
+    }
+  }
+  get exists() {
+    return {
+      player: (window as any)['player'] ? true : false,
+      YT: (window as any)['YT'] ? true : false,
+    };
+  }
+
+  constructor(private http: HttpClient) {}
+
   ngOnDestroy() {
     this.stopObs();
   }
@@ -85,7 +120,16 @@ export class YouTubeService {
         return { key: val, status: 'error' };
     }
   }
-  loadAPI() {
+
+  public getTrailer(title: string) {
+    const t = title.replace(' ', '-') + 'official-trailer',
+      query = this.base + this.apiKey + '&q=' + t,
+      result =
+      this.http.get(query).pipe(take(1));
+
+    return result;
+  }
+  public loadAPI() {
     let tag = document.createElement('script');
     tag.src = 'https://www.youtube.com/iframe_api';
     let firstScriptTag: any = document.getElementsByTagName('script')[0];
@@ -99,6 +143,7 @@ export class YouTubeService {
         events: {
           onReady: (window as any)['onPlayerReady'],
           onStateChange: (window as any)['onPlayerStateChange'],
+          onerror: console.log,
         },
       });
     };
@@ -109,46 +154,5 @@ export class YouTubeService {
     (window as any)['onPlayerStateChange'] = (e: any) => {
       (window as any)['playerState'].next(e);
     };
-  }
-
-  get video() {
-    return {
-      time: (window as any)['player'].getCurrentTime(),
-      duration: (window as any)['player'].getDuration(),
-      ready: (window as any)['playerReady']
-    };
-  }
-  set video(val: any) {
-    switch (val) {
-      case 'play':
-        (window as any)['player'].playVideo();
-        break;
-      case 'pause':
-        (window as any)['player'].pauseVideo();
-        break;
-      default:
-        if (typeof val === 'number') (window as any)['player'].seekTo(val);
-        break;
-    }
-  }
-  get volume() {
-    return {
-      isMuted: (window as any)['player'].isMuted(),
-      volume: (window as any)['player'].getVolume(),
-    };
-  }
-  set volume(val: any) {
-    switch (val) {
-      case 'mute':
-        (window as any)['player'].mute();
-        break;
-      case 'unMute':
-        (window as any)['player'].unMute();
-        break;
-      default:
-        if (typeof val === 'number')
-        (window as any)['player'].setVolume(val);
-        break;
-    }
   }
 }

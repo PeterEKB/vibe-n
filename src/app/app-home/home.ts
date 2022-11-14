@@ -2,31 +2,19 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  OnChanges,
-  SimpleChange,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import {
-  BehaviorSubject,
-  fromEvent,
-  interval,
-  Observable,
-  Subject,
-  take,
-  takeUntil,
-  takeWhile,
-  tap,
-} from 'rxjs';
+import { fromEvent, Observable, Subject, take, takeUntil, tap } from 'rxjs';
 import { MainService } from '../app-services/mainService';
+import { TMDBService } from '../app-services/tmdb-api';
 import { YouTubeService } from '../app-services/youtube-api';
 
 @Component({
   selector: 'home',
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
-  providers: [YouTubeService],
+  providers: [YouTubeService, TMDBService],
 })
 export class HomeComponent {
   data: any = [
@@ -56,14 +44,15 @@ export class HomeComponent {
       genre: 'Crime',
     },
   ];
+  trending: any;
 
   scrolling = false;
   private bCS_base = 'https://www.youtube.com/embed/';
-  private bCS_videoId = 'X0tOpBuYasI';
+  private bCS_videoId = '';
   private bCS_params = '?enablejsapi=1&mute=1&controls=0';
   private bannerClipSrc!: string;
   safeClipSrc!: any;
-  bannerImg: string = `https://i.ytimg.com/vi/${this.bCS_videoId}/maxresdefault.jpg`;
+  bannerImg: string = ''
   classes: any = {
     vidImg: {
       hide: false,
@@ -111,7 +100,8 @@ export class HomeComponent {
     private sanitizer: DomSanitizer,
     private yt: YouTubeService,
     private main: MainService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private movies: TMDBService
   ) {
     this.main.resetBg();
     this.main.background.next({
@@ -119,7 +109,20 @@ export class HomeComponent {
       solidVal: 'background: black',
     });
     this.main.nav.next({ ...this.main.nav.getValue(), active: true });
-    this.yt.loadAPI();
+    this.movies.getTrending.pipe(take(1)).subscribe((val: any) => {
+      this.trending = val;
+      // this.yt.getTrailer(this.trending[0].title).pipe(take(1)).subscribe((tag:any)=>{
+      //   this.bCS_videoId = tag.items[0].id.videoId
+      //   this.bannerImg = `https://i.ytimg.com/vi/${this.bCS_videoId}/maxresdefault.jpg`
+      //   this.updateVideoUrl(this.bCS_videoId);
+      // })
+        this.bCS_videoId = '_Z3QKkl1WyM'
+        this.bannerImg = `https://i.ytimg.com/vi/${this.bCS_videoId}/maxresdefault.jpg`
+      this.updateVideoUrl(this.bCS_videoId);
+    });
+    if (!yt.exists.player) {
+      this.yt.loadAPI();
+    }
   }
 
   ngOnInit() {
@@ -140,8 +143,6 @@ export class HomeComponent {
         takeUntil(this.notifier$)
       )
       .subscribe();
-
-    this.updateVideoUrl(this.bCS_videoId);
     this.scroll$ = fromEvent(this.content.nativeElement, 'scroll');
 
     this.scroll$
@@ -187,20 +188,20 @@ export class HomeComponent {
   actionHandler() {
     switch (this.playerState.status) {
       case 'paused':
-        this.scrollPosHandler(0)
+        this.scrollPosHandler(0);
         this.yt.video = 0;
         this.yt.video = 'play';
         this.yt.volume = 'unMute';
-        this.#volume = true
+        this.#volume = true;
         break;
       default:
         if (this.yt.volume.isMuted) {
           this.yt.volume = 'unMute';
           this.yt.video = 'play';
-          this.#volume = true
+          this.#volume = true;
         } else {
           this.yt.volume = 'mute';
-          this.#volume = false
+          this.#volume = false;
         }
         break;
     }
@@ -209,11 +210,10 @@ export class HomeComponent {
     const def = this.main.nav.getValue(),
       alt = def.hNav;
 
-    if (val !== undefined) this.content.nativeElement.scrollTo(0,0);
+    if (val !== undefined) this.content.nativeElement.scrollTo(0, 0);
 
     if (this.content.nativeElement.scrollTop <= 30) {
       this.main.nav.next({ ...def, hNav: { ...alt, status: 'shadow' } });
-      console.log(this.playerState);
       if (this.playerState.status === 'paused') this.yt.video = 'play';
     } else {
       this.main.nav.next({ ...def, hNav: { ...alt, status: 'window' } });

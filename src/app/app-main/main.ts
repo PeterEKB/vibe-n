@@ -164,8 +164,11 @@ export class MainComponent implements OnInit, OnDestroy {
         if (v.classList.contains('messages')) {
           query = v.getAttribute('identity');
         } else {
-          query = v.querySelector('[identity]').getAttribute('identity');
-        }
+          query = v.querySelector('[identity]')
+            ? v.querySelector('[identity]').getAttribute('identity')
+            : false;
+          }
+          if (!query) return;
         const identity = query.split(','),
           cat = this.nav.fNav.messages[identity[0]],
           index = cat.findIndex((e: any) => e.msgId == identity[1]),

@@ -19,13 +19,13 @@
                 </span>
             </div>
             <div id="tBody">
-                <div *ngIf="data.messages.urgent; else elseIf">
+                <div *ngIf="data.messages && data.messages.urgent; else elseIf">
 
                     <div attr.identity="urgent,{{data.messages.urgent[0].msgId}}">{{data.messages.urgent[0].category}}</div>
                 </div>
                 <ng-template #elseIf>
 
-                    <div *ngIf="data.messages.general; else default" attr.identity="general,{{data.messages.general[0].msgId}}">{{data.messages.general[0].category}}</div>
+                    <div *ngIf="data.messages && data.messages.general; else default" attr.identity="general,{{data.messages.general[0].msgId}}">{{data.messages.general[0].category}}</div>
                 </ng-template>
                 <ng-template #default>No new messages</ng-template>
             </div>
@@ -37,7 +37,7 @@
         </div>
         <div id="body"></div>
     </div>
-    <div [ngClass]="data.popup" id="popup">
+    <div *ngIf="data.messages" [ngClass]="data.popup" id="popup">
         <div id="panel">
             <div *ngFor="let message of data.messages.urgent" attr.identity="urgent,{{message.msgId}}" class="messages">
                 <p>{{message.category}}</p>

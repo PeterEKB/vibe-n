@@ -3,7 +3,7 @@
   --mov-width: calc(100% / var(--mov-num) - 30px + 30px / var(--mov-num));
   --pos: 0;
 
-  padding: 15px;
+  padding: 15px calc(var(--mov-width) / 2);
 
   #head {
     color: white;
@@ -28,38 +28,46 @@
     flex: 0 0 var(--mov-width);
     transform: translate(calc(var(--pos) * 100% + var(--pos) * 30px), 0);
     align-self: center;
-    transition: transform .3s ease;
+    transition: transform 0.3s ease;
   }
 
   #pre,
   #nxt {
-    opacity: 0;
     display: flex;
     position: absolute;
-    width: calc(var(--mov-width) / 3);
+    opacity: 0;
+    width: calc(var(--mov-width) / 2);
     height: 100%;
-    background: linear-gradient(transparent, hsla(0, 0%, 0%, 0.7), transparent);
+    background: hsla(0, 0%, 0%, 0.8);
+    border-radius: 0.3rem;
     align-items: center;
     justify-content: center;
     color: white;
-    transition-duration: 0.3s;
   }
 
-  #pre.available,
-  #nxt.available {
-    opacity: 1;
+  #pre span,
+  #nxt span {
+    opacity: 0;
+    transition-duration: 0.3s;
   }
-  #pre.hide,
-  #nxt.hide {
+  #pre.available,
+  #nxt.available,
+  #pre.available span,
+  #nxt.available span {
+    opacity: 1;
+    cursor: pointer;
+  }
+  #pre.hide span,
+  #nxt.hide span {
     opacity: 0;
   }
 
   #pre {
-    left: 0;
+    left: calc(0px - var(--mov-width) / 2 - 30px);
   }
 
   #nxt {
-    right: 0;
+    right: calc(0px - var(--mov-width) / 2 - 30px);
   }
 }
 

@@ -166,7 +166,6 @@ export class MovieRowComponent {
         this.scrollIndex -= dirVal;
         this.row.nativeElement.style.setProperty('--pos', this.scrollPos);
 
-        console.log(this.scrollIndex);
         switch (this.scrollIndex) {
           case 0:
             this.preNxtOpacity.availability('pre', false);
