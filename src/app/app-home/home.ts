@@ -17,41 +17,17 @@ import { YouTubeService } from '../app-services/youtube-api';
   providers: [YouTubeService, TMDBService],
 })
 export class HomeComponent {
-  data: any = [
-    {
-      type: 'movie',
-      genrecode: 28,
-      genre: 'Action',
-    },
-    {
-      type: 'movie',
-      genrecode: 12,
-      genre: 'Adventure',
-    },
-    {
-      type: 'movie',
-      genrecode: 16,
-      genre: 'Animation',
-    },
-    {
-      type: 'movie',
-      genrecode: 35,
-      genre: 'Comedy',
-    },
-    {
-      type: 'movie',
-      genrecode: 80,
-      genre: 'Crime',
-    },
-  ];
+  data: any = []
   trending: any;
 
   scrolling = false;
   private bCS_base = 'https://www.youtube.com/embed/';
   private bCS_videoId = '';
   private bCS_params = '?enablejsapi=1&mute=1&controls=0';
-  private bannerClipSrc!: string;
-  safeClipSrc!: any;
+  private bannerClipSrc: string = ''
+  safeClipSrc: any = this.sanitizer.bypassSecurityTrustResourceUrl(
+    this.bannerClipSrc
+  );
   bannerImg: string = ''
   classes: any = {
     vidImg: {
@@ -126,6 +102,10 @@ export class HomeComponent {
   }
 
   ngOnInit() {
+    this.movies.getGenres('movie').pipe(tap((val:any)=>{
+      this.data.push(...val)
+      console.log(this.data)
+    }),take(1)).subscribe()
     this.scrollPosHandler();
     this.yt.playerReady
       .pipe(

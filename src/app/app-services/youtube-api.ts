@@ -7,6 +7,7 @@ import {
   take,
   takeUntil,
   tap,
+  windowWhen,
 } from 'rxjs';
 
 @Injectable()
@@ -90,6 +91,8 @@ export class YouTubeService {
 
   ngOnDestroy() {
     this.stopObs();
+    (window as any)['YT'] = null
+    delete (window as any)['player']
   }
 
   private stopObs() {

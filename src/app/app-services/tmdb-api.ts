@@ -9,6 +9,22 @@ export class TMDBService {
   private req: any = observable;
   constructor(private http: HttpClient) {}
 
+  getGenres(type:string){
+    const api = `https://api.themoviedb.org/3/genre/${type}/list?` + this.apiKey;
+    this.req = this.http.get(api).pipe(
+      map((mov: any) => {
+        return mov.genres.map((val: any) => {
+          return {
+            type,
+            genrecode: val.id,
+            genre: val.name,
+          };
+        });
+      }),
+      take(1)
+    );
+    return this.req;
+  }
   reqMov(data: any, page: number) {
     const query =
       this.base +
