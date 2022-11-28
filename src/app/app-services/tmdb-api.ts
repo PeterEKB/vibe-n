@@ -9,8 +9,9 @@ export class TMDBService {
   private req: any = observable;
   constructor(private http: HttpClient) {}
 
-  getGenres(type:string){
-    const api = `https://api.themoviedb.org/3/genre/${type}/list?` + this.apiKey;
+  getGenres(type: string) {
+    const api =
+      `https://api.themoviedb.org/3/genre/${type}/list?` + this.apiKey;
     this.req = this.http.get(api).pipe(
       map((mov: any) => {
         return mov.genres.map((val: any) => {
@@ -42,7 +43,23 @@ export class TMDBService {
             id: `${val['id']}`,
             title: `${val['title']}`,
             overview: `${val['overview']}`,
-            img: `https://image.tmdb.org/t/p/w400${val['poster_path']}`,
+            img: {
+              banner: {
+                original: `https://image.tmdb.org/t/p/original${val['backdrop_path']}`,
+                300: `https://image.tmdb.org/t/p/w300${val['backdrop_path']}`,
+                400: `https://image.tmdb.org/t/p/w400${val['backdrop_path']}`,
+                500: `https://image.tmdb.org/t/p/w500${val['backdrop_path']}`,
+                600: `https://image.tmdb.org/t/p/w600${val['backdrop_path']}`,
+                700: `https://image.tmdb.org/t/p/w700${val['backdrop_path']}`,
+              },
+              poster: {
+                300: `https://image.tmdb.org/t/p/w300${val['poster_path']}`,
+                400: `https://image.tmdb.org/t/p/w400${val['poster_path']}`,
+                500: `https://image.tmdb.org/t/p/w500${val['poster_path']}`,
+                600: `https://image.tmdb.org/t/p/w600${val['poster_path']}`,
+                700: `https://image.tmdb.org/t/p/w700${val['poster_path']}`,
+              },
+            },
             genres: `${val['genre_ids']}`.split(','),
           };
         });
@@ -60,7 +77,23 @@ export class TMDBService {
             id: `${val['id']}`,
             title: `${val['title']}`,
             overview: `${val['overview']}`,
-            img: `https://image.tmdb.org/t/p/w400${val['poster_path']}`,
+            img: {
+              banner: {
+                original: `https://image.tmdb.org/t/p/original${val['backdrop_path']}`,
+                300: `https://image.tmdb.org/t/p/w300${val['backdrop_path']}`,
+                400: `https://image.tmdb.org/t/p/w400${val['backdrop_path']}`,
+                500: `https://image.tmdb.org/t/p/w500${val['backdrop_path']}`,
+                600: `https://image.tmdb.org/t/p/w600${val['backdrop_path']}`,
+                700: `https://image.tmdb.org/t/p/w700${val['backdrop_path']}`,
+              },
+              poster: {
+                300: `https://image.tmdb.org/t/p/w300${val['poster_path']}`,
+                400: `https://image.tmdb.org/t/p/w400${val['poster_path']}`,
+                500: `https://image.tmdb.org/t/p/w500${val['poster_path']}`,
+                600: `https://image.tmdb.org/t/p/w600${val['poster_path']}`,
+                700: `https://image.tmdb.org/t/p/w700${val['poster_path']}`,
+              },
+            },
             genres: `${val['genre_ids']}`.split(','),
           };
         });

@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core'
     styleUrls: ['./btn-rnd-sqr.scss']
 })
 export class ButtonRSComponent {
-    @Input() options!: any
+    @Input() options: any = {}
 }

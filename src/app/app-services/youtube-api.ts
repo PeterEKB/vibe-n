@@ -128,7 +128,7 @@ export class YouTubeService {
     const t = title.replace(' ', '-') + 'official-trailer',
       query = this.base + this.apiKey + '&q=' + t,
       result =
-      this.http.get(query).pipe(take(1));
+      this.http.get(query).pipe(take(1),tap(console.log));
 
     return result;
   }

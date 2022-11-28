@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { fromEvent, Observable, Subject, take, takeUntil, tap } from 'rxjs';
-import { MainService } from '../app-services/mainService';
+import { Genre, MainService } from '../app-services/mainService';
 import { TMDBService } from '../app-services/tmdb-api';
 import { YouTubeService } from '../app-services/youtube-api';
 
@@ -14,21 +14,25 @@ import { YouTubeService } from '../app-services/youtube-api';
   selector: 'home',
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
-  providers: [YouTubeService, TMDBService],
+  providers: [YouTubeService],
 })
 export class HomeComponent {
-  data: any = []
-  trending: any;
+  #data!: Genre[];
+  data!: Genre[];
+  dataLoad: number = 0;
+  dataLoadAmt: number = 3;
+  featuredMov: any;
 
   scrolling = false;
+  private trending: any = [];
   private bCS_base = 'https://www.youtube.com/embed/';
   private bCS_videoId = '';
   private bCS_params = '?enablejsapi=1&mute=1&controls=0';
-  private bannerClipSrc: string = ''
+  private bannerClipSrc: string = '';
   safeClipSrc: any = this.sanitizer.bypassSecurityTrustResourceUrl(
     this.bannerClipSrc
   );
-  bannerImg: string = ''
+  bannerImg: string = '';
   classes: any = {
     vidImg: {
       hide: false,
@@ -87,14 +91,14 @@ export class HomeComponent {
     this.main.nav.next({ ...this.main.nav.getValue(), active: true });
     this.movies.getTrending.pipe(take(1)).subscribe((val: any) => {
       this.trending = val;
-      // this.yt.getTrailer(this.trending[0].title).pipe(take(1)).subscribe((tag:any)=>{
-      //   this.bCS_videoId = tag.items[0].id.videoId
-      //   this.bannerImg = `https://i.ytimg.com/vi/${this.bCS_videoId}/maxresdefault.jpg`
-      //   this.updateVideoUrl(this.bCS_videoId);
-      // })
-        this.bCS_videoId = '_Z3QKkl1WyM'
-        this.bannerImg = `https://i.ytimg.com/vi/${this.bCS_videoId}/maxresdefault.jpg`
+      this.featuredMov = this.trending[0];
+      this.bannerImg = this.trending[0].img.banner.original;
+      this.yt.getTrailer(this.trending[0].title).pipe(take(1)).subscribe((tag:any)=>{
+      this.bCS_videoId = tag.items[0].id.videoId
       this.updateVideoUrl(this.bCS_videoId);
+      })
+      // this.bCS_videoId = '_Z3QKkl1WyM';
+      // this.updateVideoUrl(this.bCS_videoId);
     });
     if (!yt.exists.player) {
       this.yt.loadAPI();
@@ -102,11 +106,11 @@ export class HomeComponent {
   }
 
   ngOnInit() {
-    this.movies.getGenres('movie').pipe(tap((val:any)=>{
-      this.data.push(...val)
-      console.log(this.data)
-    }),take(1)).subscribe()
-    this.scrollPosHandler();
+    this.main.genres.pipe(take(1)).subscribe((val) => {
+      this.#data = val;
+      this.data = this.#data.slice(0, this.dataLoad);
+      this.scrollPosHandler();
+    });
     this.yt.playerReady
       .pipe(
         tap((val) => {
@@ -188,7 +192,19 @@ export class HomeComponent {
   }
   scrollPosHandler(val?: number) {
     const def = this.main.nav.getValue(),
-      alt = def.hNav;
+      alt = def.hNav,
+      ele = this.content.nativeElement,
+      scrollPos = ele.scrollTop,
+      height = ele.querySelector('mov-ele')
+        ? ele.querySelector('mov-ele').clientHeight
+        : 0,
+      scrollHeight = ele.scrollHeight - ele.clientHeight,
+      overFlow = scrollHeight - height * this.dataLoadAmt
+    if (scrollPos >= overFlow && this.dataLoad < this.#data.length) {
+      this.dataLoad += this.dataLoadAmt;
+      this.data = this.#data.slice(0, this.dataLoad);
+      console.log(scrollHeight);
+    }
 
     if (val !== undefined) this.content.nativeElement.scrollTo(0, 0);
 

@@ -14,7 +14,7 @@ import { AuthCheck } from './app-services/auth.validator';
 import { MovieElementComponent } from './app-reusables/movElement/movElement';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieRowComponent } from './app-reusables/movRow/movRow';
-import { YouTubeService } from './app-services/youtube-api';
+import { TMDBService } from './app-services/tmdb-api';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import { YouTubeService } from './app-services/youtube-api';
     MovieRowComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
-  providers: [Users, AuthCheck],
+  providers: [Users, AuthCheck, TMDBService],
   bootstrap: [MainComponent],
 })
 export class AppModule {}

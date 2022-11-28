@@ -10,10 +10,10 @@ export const routes: Routes = [
   { path: 'home', redirectTo: '' },
   { path: '**', redirectTo: '' },
 ];
-export const RoutingComp = [HomeComponent, SignInComponent]
+export const RoutingComp = [HomeComponent, SignInComponent];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

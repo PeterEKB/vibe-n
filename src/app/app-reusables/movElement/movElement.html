@@ -6,7 +6,12 @@
     </div>
     <div id="actual" #actual [ngClass]="element.actual">
         <div id="poster">
-            <img [src]="data.img" (load)="loaded">
+            <img [src]="data.img.poster[300]" (load)="loaded">
         </div>
+    </div>
+    <div id="info">
+        <img [src]="data.img.banner[500]" alt="" id="banner">
+        <h4>{{data.title}}</h4>
+        <p>{{data.overview}}</p>
     </div>
 </div>

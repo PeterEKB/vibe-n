@@ -26,9 +26,15 @@
 
   mov-ele {
     flex: 0 0 var(--mov-width);
-    transform: translate(calc(var(--pos) * 100% + var(--pos) * 30px), 0);
+    translate: calc(var(--pos) * 100% + var(--pos) * 30px) 0;
     align-self: center;
-    transition: transform 0.3s ease;
+    transition: translate 0.3s ease, scale .2s, z-index .2s;
+    z-index: 1;
+  }
+  mov-ele:hover {
+    z-index: 10;
+    scale: 180%;
+    transition: translate 0.3s ease, scale .2s .5s, z-index 0s .5s;
   }
 
   #pre,
@@ -43,6 +49,7 @@
     align-items: center;
     justify-content: center;
     color: white;
+    z-index: 5;
   }
 
   #pre span,

@@ -1,3 +1,4 @@
 <div id="btn" [ngClass]="options.config">
-    <p>{{options.text}}</p>
+    <p *ngIf="options.text; else content">{{options.text}}</p>
 </div>
+<ng-template #content><p><ng-content></ng-content></p></ng-template>

@@ -1,46 +1,88 @@
 #content {
-    position: relative;
-    aspect-ratio: .7;
-    // width: calc(15% - 42.5px);
+  position: relative;
+  aspect-ratio: 0.7;
+  width: 100%;
+  border: 2px solid hsl(0, 0%, 50%);
+  border-radius: 0.3rem;
+  box-shadow: 2px 2px 4px black;
+  transform-origin: center center;
+  transition-duration: 0.3s;
+  transition: aspect-ratio 0.2s 0s;
+  scroll-snap-align: start;
+  overflow: hidden;
+
+  #default {
+    display: flex;
+    position: absolute;
     width: 100%;
-    border: 2px solid hsl(0, 0%, 50%);
-    border-radius: .3rem;
-    // margin: 5px;
-    box-shadow: 2px 2px 4px black;
-    // transition: width .3s .3s;
-    transform-origin: center center;
-    transition-duration: .3s;
-    scroll-snap-align: start;
-    overflow: hidden;
-
-
-    #default {
-        display: flex;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: white;
-        justify-content: center;
-        align-items: center;
-    }
-    #actual {
-        display: none;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
-
-    #actual.display {
-        display: block;
-    }
+    height: 100%;
+    background: white;
+    justify-content: center;
+    align-items: center;
+  }
+  #actual {
+    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     img {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        min-width: 100%;
-        min-height: 100%;
-        object-fit: cover;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      min-width: 100%;
+      min-height: 100%;
+      object-fit: cover;
     }
+  }
+
+  #actual.display {
+    display: block;
+  }
+}
+#info {
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  inset: 0;
+  background-color: hsla(0, 0%, 50%, 0.5);
+  padding: 5px;
+  backdrop-filter: blur(10px);
+  color: white;
+  font-size: 8px;
+  text-shadow: 0 0 2px black;
+  transition: opacity 0.2s 0s;
+
+  img {
+    width: 100%;
+  }
+
+  h4 {
+    padding: 5px;
+  }
+
+  p {
+    padding: 5px;
+    box-shadow: 0px .5px 2px black inset;
+    overflow-y: auto;
+  }
+  p::-webkit-scrollbar {
+    width: 3px;
+  }
+  p::-webkit-scrollbar-thumb {
+    border: none;
+  }
+}
+:host:hover {
+  #content {
+    transition: aspect-ratio 0.3s 0.4s;
+    aspect-ratio: 0.9;
+  }
+
+  #info {
+    opacity: 1;
+    transition: opacity 0.3s 0.4s;
+  }
 }

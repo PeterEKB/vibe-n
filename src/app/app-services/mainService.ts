@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Directive, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, take, tap } from 'rxjs';
+import { TMDBService } from './tmdb-api';
 
 @Injectable()
 export class MainService {
@@ -17,6 +18,19 @@ export class MainService {
     pause: false,
     images: [''],
   };
+  #_genres: Genre[] = [];
+  genres:Observable<Genre[]> = new Observable((observer)=>{
+    this.movies
+      .getGenres('movie')
+      .pipe(
+        tap((val: any) => {
+          this.#_genres.push(...val);
+          observer.next(this.#_genres)
+        }),
+        take(1)
+      )
+      .subscribe();
+  })
   background = new BehaviorSubject({
     solid: true,
     solidVal: '',
@@ -41,11 +55,17 @@ export class MainService {
       },
       popup: {},
       messages: {},
-    }
-  })
+    },
+  });
+
+  constructor(private router: Router, private movies: TMDBService) {}
+
   resetBg = () => {
     this.background.next(this.#background);
   };
-
-  constructor(private router: Router) {}
+}
+export interface Genre {
+  type: string
+  genrecode: number
+  genre: string
 }

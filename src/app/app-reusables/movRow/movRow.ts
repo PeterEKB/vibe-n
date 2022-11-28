@@ -191,13 +191,13 @@ export class MovieRowComponent {
   private getMovie() {
     this.movies
       .reqMov(this.data, 1)
-      .pipe(takeUntil(this.notifier$))
+      .pipe(take(1))
       .subscribe((val: any[]) => {
         this.content.push(...val);
       });
     this.movies
       .reqMov(this.data, 2)
-      .pipe(takeUntil(this.notifier$))
+      .pipe(take(1))
       .subscribe((val: any[]) => {
         this.content.push(...val);
       });
